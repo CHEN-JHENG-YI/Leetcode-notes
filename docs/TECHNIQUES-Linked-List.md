@@ -3,13 +3,37 @@
 > This page consolidates common linked-list techniques for quick review.  
 > Tag each note with the exact names in `techniques: [...]` to auto-link via `generate_index.py`.
 
----
+----------------------------------------------------
 
 ## Dummy Head
 
 **When to use**
-- The head node may change (delete first node, reverse from position 1, etc.).
-- You want to normalize the “previous node” logic and avoid special-casing the head.
+1. You may change the first node or the head pointer (delete/insert at position 1, reverse starting at 1).
+2. You want a uniform prev for every node so you never special-case prev == nullptr.
+3. You are splicing segments or merging lists where the new head is unknown until the end.
+4. You build an output list incrementally (use dummy + tail as the anchor).
+5. You need to return the (possibly new) head safely after in-place transformations.
+
+**Smells that suggest using it**
+1. You have branches like if (pos == 1) … else … or if (head == nullptr) ….
+2. You repeatedly check if (!prev) before linking.
+
+**When it’s overkill**
+1. Read-only traversal, or you already use the pointer-to-pointer pattern (ListNode** pp = &head).
+
+```cpp
+ListNode** pp = &head;          // pp always points to the "next field" that leads to current 
+while (*pp) {
+    if (need_delete(*pp)) {     // delete current
+        ListNode* del = *pp;
+        *pp = del->next;
+        // delete del;
+    } else {
+        pp = &((*pp)->next);    // advance
+    }
+} 
+```
+
 
 **Steps**
 1. `ListNode dummy(0); dummy.next = head;`
@@ -27,7 +51,7 @@ dummy.next = head;
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Fast/Slow Pointers
 
@@ -39,18 +63,32 @@ return dummy.next;
 **Middle + Palindrome**
 ```cpp
 // find middle (for even length, this returns left-mid)
-ListNode *slow=head, *fast=head;
-while (fast && fast->next) { slow=slow->next; fast=fast->next->next; }
+// Ex: LeetCode 234. Palindrome Linked List
+ListNode *slow = head, *fast = head;
+while (fast && fast->next) {
+    slow=slow->next; 
+    fast=fast->next->next; 
+}
 
 auto reverse = [&](ListNode* h){
     ListNode* prev=nullptr; ListNode* cur=h;
-    while(cur){ auto nxt=cur->next; cur->next=prev; prev=cur; cur=nxt; }
+    while(cur){ 
+        auto nxt=cur->next; 
+        cur->next=prev; 
+        prev=cur; cur=nxt; 
+    }
     return prev;
 };
+
 ListNode* second = reverse(slow);
 ListNode *p1=head, *p2=second;
 bool ok = true;
-while (p2) { if (p1->val!=p2->val){ ok=false; break; } p1=p1->next; p2=p2->next; }
+while (p2) {
+    if (p1->val!=p2->val){
+        ok=false; break; 
+    }
+    p1=p1->next; p2=p2->next;     
+}
 // optional: reverse(second) again to restore
 ```
 
@@ -68,7 +106,7 @@ while (fast && fast->next) {
 }
 ```
 
----
+----------------------------------------------------
 
 ## Reverse Whole List
 ```cpp
@@ -79,7 +117,7 @@ return prev;
 
 **Pitfall**: save `nxt` first, then change `next`.
 
----
+----------------------------------------------------
 
 ## Reverse Sublist [m..n]
 ```cpp
@@ -96,7 +134,7 @@ for(int i=0;i<n-m;i++){             // head insertion
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Reverse in k-Group
 ```cpp
@@ -127,7 +165,7 @@ return dummy.next;
 - Do not reverse the last short block (< k).
 - Carefully reconnect `pre->next` and the block’s tail to `tailNext`.
 
----
+----------------------------------------------------
 
 ## Reverse Even-Length Groups
 - Group sizes are 1,2,3,... For each group, count the **actual** length `cnt` (the last group may be shorter). Reverse iff `cnt` is even.
@@ -135,7 +173,7 @@ return dummy.next;
 
 **Pitfall**: always use `min(expectedSize, remaining)` for `cnt`.
 
----
+----------------------------------------------------
 
 ## Group Reversal
 ```cpp
@@ -156,13 +194,13 @@ ListNode* reverse_segment(ListNode* head, ListNode* tail_next){
 2. If needed, reverse the segment in-place and connect `prev->next` to the new head.
 3. Move `prev` to the segment tail (old head), advance `cur` to the next start.
 
----
+-------------------------------------------------------
 
 ## Two Pointers from Ends
 - For singly lists, often combine with “reverse second half” to compare head & tail values.
 - For doubly lists or arrays, maintain `i/j` from both ends.
 
----
+----------------------------------------------------
 
 ## Remove N-th From End
 ```cpp
@@ -176,7 +214,7 @@ slow->next=del->next;
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Merge Two Sorted Lists
 ```cpp
@@ -190,7 +228,7 @@ tail->next = l1?l1:l2;
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Merge K Sorted Lists
 ```cpp
@@ -207,7 +245,7 @@ tail->next=nullptr;
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Split List to Parts
 ```cpp
@@ -223,7 +261,7 @@ for(int i=0;i<k;i++){
 }
 ```
 
----
+----------------------------------------------------
 
 ## Partition List (< x in front)
 ```cpp
@@ -237,7 +275,7 @@ t1->next=d2.next;
 return d1.next;
 ```
 
----
+----------------------------------------------------
 
 ## Reorder List (L0→Ln→L1→Ln-1…)
 1) Find middle; 2) Reverse second half; 3) Weave.
@@ -260,7 +298,7 @@ while(l1&&l2){
 }
 ```
 
----
+----------------------------------------------------
 
 ## Odd-Even List
 ```cpp
@@ -274,7 +312,7 @@ odd->next=evenHead;
 return head;
 ```
 
----
+----------------------------------------------------
 
 ## Swap Nodes in Pairs
 ```cpp
@@ -290,7 +328,7 @@ while(pre->next && pre->next->next){
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Add Two Numbers (carry)
 ```cpp
@@ -307,7 +345,7 @@ return dummy.next;
 
 **Variant II**: digits stored in forward order → reverse both lists or use stacks.
 
----
+----------------------------------------------------
 
 ## Intersection of Two Lists
 ```cpp
@@ -319,7 +357,7 @@ while(pA!=pB){
 return pA; // may be nullptr
 ```
 
----
+----------------------------------------------------
 
 ## Copy List with Random Pointer (O(1) extra space)
 ```cpp
@@ -340,7 +378,7 @@ for(auto p=head;p;){
 return newHead;
 ```
 
----
+----------------------------------------------------
 
 ## Flatten Multilevel Doubly Linked List
 ```cpp
@@ -360,7 +398,7 @@ while(cur || !st.empty()){
 return dummy.next;
 ```
 
----
+----------------------------------------------------
 
 ## Linked List as Stack/Queue
 **Stack (push/pop at head)**
