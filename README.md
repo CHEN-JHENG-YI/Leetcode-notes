@@ -1,4 +1,4 @@
-# LeetCode Notes Starter (English)
+# LeetCode Notes Starter 
 
 This is a VS Code–friendly, GitHub-ready starter for organizing LeetCode notes with technique tags and auto-generated indexes.
 
