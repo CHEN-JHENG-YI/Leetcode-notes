@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "yzhang.markdown-all-in-one",
+    "shd101wyy.markdown-preview-enhanced",
+    "ms-vscode.cpptools",
+    "streetsidesoftware.code-spell-checker",
+    "eamodio.gitlens",
+    "wayou.vscode-todo-highlight"
+  ]
+}
