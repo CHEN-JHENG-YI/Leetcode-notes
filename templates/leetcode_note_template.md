@@ -1,10 +1,9 @@
 ---
 id: {{ID}}
 title: "{{TITLE}}"
-topics: ["{{TOPIC}}"]        # e.g., ["Linked List", "Two Pointers"]
-techniques: []               # e.g., ["Dummy Head", "Group Reversal"]
+topics: ["{{TOPIC}}"]        
+techniques: []               
 difficulty: "{{DIFFICULTY}}"
-language: "{{LANGUAGE}}"
 slug: "{{SLUG}}"
 ---
 
@@ -12,7 +11,6 @@ slug: "{{SLUG}}"
 
 **Difficulty**: {{DIFFICULTY}}  
 **Topics**: {{TOPIC}}  
-**Language**: {{LANGUAGE}}  
 
 ---
 
@@ -21,44 +19,23 @@ slug: "{{SLUG}}"
 
 ---
 
-## 📜 Problem Summary (in your own words)
-Briefly restate the problem, inputs/outputs, and tricky constraints. Call out edge cases.
-
----
-
-## 💡 Approach
-1. Approach A (your primary solution)
+## 💡 Approaches
+1. Approach A
    - Key idea:
-   - Time/Space:
-2. Approach B (optional)
-   - When to use:
+  
+   - Time  complexity: O()
+   - Space complexity: O()
+  
+2. Approach B
+   - Key idea:
+  
+   - Time  complexity: O()
+   - Space complexity: O()
+  
    - Trade-offs:
 
 ---
 
-## 🖥 Code (primary language)
-```{{LANG_CODE}}
-// Your solution here.
-```
-> If you have multiple languages, add another section below.
-
----
-
-## ⏱ Complexity
-- **Time**: ...
-- **Space**: ...
-
----
-
-## 🧪 Test Cases
-```text
-Input:
-Output:
-Explain:
-```
-
----
-
 ## 📝 Notes / Pitfalls
-- ...
-- ...
+- …
+- …

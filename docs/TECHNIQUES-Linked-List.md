@@ -110,13 +110,18 @@ while (fast && fast->next) {
 
 ## Reverse Whole List
 ```cpp
-ListNode* prev=nullptr,*cur=head;
-while (cur){ ListNode* nxt=cur->next; cur->next=prev; prev=cur; cur=nxt; }
-return prev;
+ListNode* prv = nullptr,*cur = head;
+while (cur){
+    ListNode* nxt = cur->next; 
+    cur->next = prv; 
+    prv = cur; 
+    cur = nxt; 
+}
+return prv;
 ```
 
 **Pitfall**: save `nxt` first, then change `next`.
-
+Hint: Need 3 pointers: prv cur nxt
 ----------------------------------------------------
 
 ## Reverse Sublist [m..n]
@@ -193,12 +198,6 @@ ListNode* reverse_segment(ListNode* head, ListNode* tail_next){
 1. Probe the segment to get its actual length and `tail_next`.
 2. If needed, reverse the segment in-place and connect `prev->next` to the new head.
 3. Move `prev` to the segment tail (old head), advance `cur` to the next start.
-
--------------------------------------------------------
-
-## Two Pointers from Ends
-- For singly lists, often combine with “reverse second half” to compare head & tail values.
-- For doubly lists or arrays, maintain `i/j` from both ends.
 
 ----------------------------------------------------
 
