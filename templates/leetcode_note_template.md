@@ -25,7 +25,10 @@ slug: "{{SLUG}}"
   
    - Time  complexity: O()
    - Space complexity: O()
-  
+```cpp
+// See your LeetCode submission file
+```
+
 2. Approach B
    - Key idea:
   
@@ -33,7 +36,9 @@ slug: "{{SLUG}}"
    - Space complexity: O()
   
    - Trade-offs:
-
+```cpp
+// See your LeetCode submission file
+```
 ---
 
 ## 📝 Notes / Pitfalls
